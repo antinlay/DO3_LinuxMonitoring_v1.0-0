@@ -1,4 +1,13 @@
 #!/bin/bash
+OSNAME=`grep '^NAME' /etc/os-release`;
+OSVER=`grep -e "VERSION=" /etc/os-release`;
+TZ=timedatectl;
+DATE=`date "+%d %B %Y %T"`;
+UPTIME=`uptime`;
+UPTIME_SEC=`awk '{print $1}' /proc/uptime`;
+INF=`ip route list | awk '/^default/ {print $5}'`;
+IP=`ip -o -f inet addr show $INF | awk '/scope global/ {print $4}'`;
+MASK=`ifconfig | grep -w inet |grep -v $IP | awk '{print $4}'`
 
 # HOSTNAME = network name
 echo "HOSTNAME = "$HOSTNAME;
@@ -7,7 +16,7 @@ echo "TIMEZONE = "$TIMEZONE;
 # USER = current user who ran the script
 echo "USER =" $USER;
 # OS = type and version of operating system
-echo "OS =" $OS;
+echo "OS =" $OSVER;
 # DATE = current time as: 12 May 2020 12:24:36
 echo "DATE =" $DATE;
 # UPTIME = system uptime
