@@ -51,10 +51,10 @@ echo "SPACE_ROOT_USED =" $SPACE_ROOT_USED "MB";
 # SPACE_ROOT_FREE = size of free space of the root partition in MB, with an accuracy of two decimal places
 echo "SPACE_ROOT_FREE =" $SPACE_ROOT_FREE "MB";
 
-echo "Create file with sysinfo?"
+echo "Create file with sysinfo? (y - yes, other - no)"
 read item
 case "$item" in
-    y|Y) echo "Enter «y», creating file"
+    y|Y) echo "$FILENAME save!"
         touch $FILENAME
 
         echo "HOSTNAME = "$HOSTNAME >> $FILENAME
