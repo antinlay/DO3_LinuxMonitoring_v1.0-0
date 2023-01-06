@@ -1,4 +1,5 @@
 #!/bin/bash
+
 OSNAME=`grep '^NAME' /etc/os-release`;
 OSVER=`grep -e "VERSION=" /etc/os-release`;
 # TZ=`timedatectl| grep -i "time" | awk '{print $6}'`;
