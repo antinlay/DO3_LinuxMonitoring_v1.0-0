@@ -1,7 +1,8 @@
 #!/bin/bash
 
+start_time=$(date +%s.%N)  
 # Получаем текущую директорию
-current_dir=$(pwd)
+current_dir=$1
 
 # Считаем количество папок в текущей директории (включая вложенные)
 num_folders=$(find $current_dir -type d | wc -l)
@@ -41,35 +42,46 @@ echo "Symbolic links = $num_symlinks"
 
 # Выводим топ 10 файлов максимального размера (путь, размер, тип)
 echo "TOP 10 files of maximum size arranged in descending order (path, size and type):"
-# find $current_dir -type f -exec du -sh {} + | sort -rh | head -n 10 | nl -v 0
+find $current_dir -type f -exec du -sh {} + | sort -rh | head -n 10 | nl -v 0
 
-# Dictionary to store the top 10 files 
-declare -A top_10 
-# Start the timer
-start_time=$(date +%s)  
-# Walk through all the files in the directory tree 
-for path in $(find /var -type f);
-do
-    # Get the size of the file in bytes
-    size=$(stat -c%s "$path")
-    # Calculate the MD5 hash of the file
-    md5_hash=$(md5sum "$path" | cut -d ' ' -f 1)
-    # Add the file to the top 10 dictionary if it is an executable and its size is larger than the smallest size in the dictionary
-    if [[ -x "$path" ]] && [[ ${#top_10[@]} -lt 10 || $size -gt ${top_10[$(echo ${top_10[@]} | tr ' ' '\n' | sort -n | head -1)]:-0} ]]; then
-    top_10[$path]=$size 
-    # If the dictionary has more than 10 elements, remove the smallest one
-        if [[ ${#top_10[@]} -gt 10 ]]; then
-        unset top_10[$(echo ${top_10[@]} | tr ' ' '\n' | sort -n | head -1)]
-        fi
-    fi
-done  
-# Print the top 10 files in descending order by size
-echo "TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file)"
-i=1
-for path in $(echo ${!top_10[@]} | tr ' ' '\n' | sort -nr -k 2);
-do
-echo "$i - $path, ${top_10[$path]} bytes, $md5_hash"
-(i++)
-done  
+#!/bin/bash
+
+# Get a list of all executable files in the current directory and its subdirectories
+files=$(find $current_dir -type f -executable)
+
+# Initialize an array to store the sizes and hashes of the executable files
+declare -A sizes
+declare -A hashes
+
+# Calculate the size and hash of each executable file
+for file in $files; do
+  size=$(stat -c%s "$file")
+  hash=$(md5sum "$file" | cut -d' ' -f1)
+  sizes[$file]=$size
+  hashes[$file]=$hash
+done
+
+# Sort the files by size in descending order
+sorted_files=$(for file in "${!sizes[@]}"; do
+  printf "%s %s\n" "${sizes[$file]}" "$file"
+done | sort -nr)
+
+# Output the top 10 files, along with their path, size, and hash
+i=0
+echo "TOP 10 executable files of maximum size arranged in descending order:"
+for line in $sorted_files; do
+  size=$(echo "$line" | awk '{print $1}')
+  file=$(echo "$line" | awk '{print $2}')
+  hash=${hashes[$file]}
+  printf "%d - %s %d bytes %s\n" $((++$i)) "$file" "$size" "$hash"
+  if [ "$i" -ge 10 ]; then
+    break
+  fi
+done
+
+end_time=$(date +%s.%N)
+
 # Print the execution time
-echo "Script execution time (in seconds) = $(($(date +%s) - start_time))"
+echo_time=$(echo $end_time - $start_time | bc)
+# time_echo=$(echo $echo_time | sed "s/\./,/")
+printf "Script execution time (in seconds) = %.1f" "$echo_time"
