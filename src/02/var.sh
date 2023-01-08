@@ -16,4 +16,8 @@ RAM_FREE=$(free -t -m | grep "Total" | awk '{ printf("%0.3f", ($2 - $3) / 1024) 
 SPACE_ROOT=$(df -k / | grep "dev" | awk '{printf("%0.2f", ($3 + $4) / 1024)}');
 SPACE_ROOT_USED=$(df -k / | grep "dev" | awk '{printf("%0.2f", $3 / 1024)}');
 SPACE_ROOT_FREE=$(df -k / | grep "dev" | awk '{printf("%0.2f", $4 / 1024)}');
-FILENAME=$(date "+%d_%m_%Y_%H_%M_%S.status")
+# Part 4 variable
+FILENAME=$(date "+%d_%m_%Y_%H_%M_%S.status");
+# Part 5 variables
+
+
