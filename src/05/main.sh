@@ -40,10 +40,15 @@ then
     echo "Archive files = $arch_files";
     echo "Symbolic links = $symb_files";
     # Top 10 files with largest size in descending order (path, size and type)
-    echo "TOP 10 files of maximum size arranged in descending order (path, size and type):"
-    . tfms05.sh
+    echo "TOP 10 files of maximum size arranged in descending order (path, size and type):";
+    . tfms05.sh;
+    # TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file) 
     echo "TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file):"
-    . ttef05.sh
+    . ttef05.sh;
+    end_time=$(date +%s.%N);
+    exe_time=$(echo "$end_time - $start_time" | bc);
+    time_echo=$(echo $exe_time | sed "s/\./,/");
+    printf "Script execution time (in seconds) = %.1f\n" "$time_echo";
 else
     echo "Error: Please run script from *src$dir_0/ directory!"
     exit 1
