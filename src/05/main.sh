@@ -42,6 +42,8 @@ then
     # Top 10 files with largest size in descending order (path, size and type)
     echo "TOP 10 files of maximum size arranged in descending order (path, size and type):"
     . tfms05.sh
+    echo "TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file):"
+    . ttef05.sh
 else
     echo "Error: Please run script from *src$dir_0/ directory!"
     exit 1
