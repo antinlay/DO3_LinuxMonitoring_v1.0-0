@@ -12,8 +12,20 @@ files=$(find "${get_dir}" -type f -printf "%h/%f %s\n" | sort -rh -k2 | head -n 
 
 for file in ${files};
 do
-    i=$i++;
-    size=$(ls -sh "${file}" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1_\2/' | cut -d'_' -f1);
+    i=$i+1;
+    size=$(ls -sh "${file}" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1_\2/' | cut -d'_' -f1 | awk '{ printf ("%.0f", $1) }');
     unit=$(ls -sh "${file}" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1_\2/' | cut -d'_' -f2);
-    exten=$(find "${get_dir}" -type f | sed 's/\(^.*\.\).*$/\1/g');
+    exten=$(find "${file}" -type f | sed -E 's|^(.*/)([^/.]*)(\.[^/.]*)?$|\3|');
+    set_num="${i} -";
+    sizes[$i]=$size;
+    extens[$i]=$exten;
+    units[$i]=$unit;
+    set_nums[$i]=$set_num;
+    files[$i]=$file;
+done
+# Use count
+count=$i;
+# Output in need format
+for (( i=1; i <= $count; i++ )); do
+  echo $(printf "%s %s %s %s %s\n" "${set_nums[$i]}" "${files[$i]}", "${sizes[$i]}" "${units[$i]}", "${extens[$i]}") 
 done
