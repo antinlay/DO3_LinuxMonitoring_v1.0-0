@@ -8,10 +8,12 @@ declare -i i=0 count=0
 # Count of result
 count=10;
 
-files=$(find "${get_dir}" -type f -printf "%h/%f %s\n" | sort -rh -k2 | head -n 10 | cut -d' ' -f1);
+files=$(find "${get_dir}" -type f -printf "%h/%f %s\n" | sort -rh -k2 | head -n "${count}" | cut -d' ' -f1);
 
 for file in ${files};
 do
     i=$i++;
-    size=$(ls -h "${files}")
+    size=$(ls -sh "${file}" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1_\2/' | cut -d'_' -f1);
+    unit=$(ls -sh "${file}" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1_\2/' | cut -d'_' -f2);
+    exten=$(find "${get_dir}" -type f | sed 's/\(^.*\.\).*$/\1/g');
 done

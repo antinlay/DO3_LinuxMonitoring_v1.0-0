@@ -14,7 +14,7 @@ files=$(find "$get_dir" -type f -executable -printf "%h/%f %s\n" | sort -hr -k2 
 for file in ${files}; do
   i=$i+1;
   size=$(ls -sh "$file" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGBTb]\)/\1 \2/g' | cut -d' ' -f1 | awk '{ printf ("%.0f", $1) }');
-  unit=$(ls -sh "$file" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGBTb]\)/\1 \2/g' | cut -d' ' -f2)"B";
+  unit=$(ls -sh "$file" | cut -d' ' -f1 | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2/g' | cut -d' ' -f2)"B";
   hash=$(md5sum "$file" | cut -d' ' -f1);
   set_num="${i} -";
   # echo ""${set_num}" "${file}", "${size}" "${unit}", "${hash}"";
