@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir_pr=$(pwd)
-dir_0=$(pwd)
+dir_0="/02"
 
 if [[ $dir_pr == *"$dir_0" ]] ;
 then

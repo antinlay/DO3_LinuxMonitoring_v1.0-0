@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo ""
+printf "\n"
 get_color $col1_bg
 def $default
 echo "Column 1 background = $code ($color)"

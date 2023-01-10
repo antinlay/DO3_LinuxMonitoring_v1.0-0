@@ -1,12 +1,10 @@
 #!/bin/bash
 
-if [ "$#" -eq 0 ] || [ "$#" -gt 1 ] ;
+if [ "$#" -eq 1 ] ;
 then 
-    echo "PLESASE SET ONE PARAM"
-    exit 1
-else
-    case $1 in
-        ''|*[!a-zA-Z]*) echo "ENTER TEXT PARAM" ;;
-        *) echo $1 ;;
-    esac
+    if [[ "${1}" =~ ^[-+]?[0-9]+([.,][0-9]+)?$ ]]; then
+        echo "Error: enter incorrect"
+    else
+        echo $1
+    fi
 fi

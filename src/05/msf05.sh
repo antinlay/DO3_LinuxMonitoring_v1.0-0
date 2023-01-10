@@ -8,10 +8,9 @@ declare -i i=0
 
 # Count of result = 5 + 1 because first folder is total
 count=6;
+# Path size unit
+path_arr=$(du -h -d 1 "${get_dir}" | sort -rh | head -n ${count} | tail -n +2 | awk '{print $2}');
 
-path_arr=$(du -h "${get_dir}" | sort -rh | head -n ${count} | tail -n +2 | awk '{print $2}');
-
-# echo "${path_arr}";
 # Calculate the size and hash of each executable file
 for path in ${path_arr};
 do
@@ -27,6 +26,7 @@ done
 # Use count
 count=$i;
 # Output in need format
-for (( i=1; i <= $count; i++ )); do
+for (( i=1; i <= $count; i++ ));
+do
   echo $(printf "%s %s %s %s\n" "${set_nums[$i]}" "${path_arr[$i]}"/, "${sizes[$i]}" "${units[$i]}") 
 done
