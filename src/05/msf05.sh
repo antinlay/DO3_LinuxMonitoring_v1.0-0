@@ -13,7 +13,7 @@ do
   # echo "${get_dir}" "OK";
   path=$(du -h -d 1 "${get_dir}" | sort -rh | head -n ${count} | tail -n +2 | sed -E 's/^([0-9]+[,.0-9]+)([[KMGTkmgt])\t(.*)/\3/' | sed -n "${i}p");
   # echo "${path}" "!!";
-  size=$(sudo du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2/g' | cut -d' ' -f1 | awk '{ printf ("%.0f", $1) }');
+  size=$(du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2/g' | cut -d' ' -f1 | awk '{ printf ("%.0f", $1) }');
   unit=$(du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2B/g' | cut -d' ' -f2);
   set_num="${i} -";
   echo $(printf "%s %s %s %s\n" "${set_num}" "${path}"/, "${size}" "${unit}");
