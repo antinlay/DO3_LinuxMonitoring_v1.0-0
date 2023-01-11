@@ -8,25 +8,13 @@ declare -i i=0
 
 # Count of result = 5 + 1 because first folder is total
 count=6;
-# Path size unit
-path_arr=$(du -h -d 1 "${get_dir}" | sort -rh | head -n ${count} | tail -n +2 | awk '{print $2}');
-
-# Calculate the size and hash of each executable file
-for path in ${path_arr};
+for (( i=1; i < $count; i++ ));
 do
-  i=$i+1;
-  size=$(du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2/g' | cut -d' ' -f1 | awk '{ printf ("%.0f", $1) }');
+  # echo "${get_dir}" "OK";
+  path=$(du -h -d 1 "${get_dir}" | sort -rh | head -n ${count} | tail -n +2 | sed -E 's/^([0-9]+[,.0-9]+)([[KMGTkmgt])\t(.*)/\3/' | sed -n "${i}p");
+  # echo "${path}" "!!";
+  size=$(sudo du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2/g' | cut -d' ' -f1 | awk '{ printf ("%.0f", $1) }');
   unit=$(du -h -d 0 "${path}" | awk '{print $1}' | sed 's/\([0-9]\)\([KMGTkmgt]\)/\1 \2B/g' | cut -d' ' -f2);
   set_num="${i} -";
-  sizes[$i]=$size;
-  units[$i]=$unit;
-  set_nums[$i]=$set_num;
-  path_arr[$i]=$path;
-done
-# Use count
-count=$i;
-# Output in need format
-for (( i=1; i <= $count; i++ ));
-do
-  echo $(printf "%s %s %s %s\n" "${set_nums[$i]}" "${path_arr[$i]}"/, "${sizes[$i]}" "${units[$i]}") 
+  echo $(printf "%s %s %s %s\n" "${set_num}" "${path}"/, "${size}" "${unit}");
 done

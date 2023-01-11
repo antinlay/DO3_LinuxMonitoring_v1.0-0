@@ -8,7 +8,7 @@ if [[ $dir_pr == *"$dir_0" ]] ;
 then
   . ../02/var.sh
   get_dir="${@}"
-  if test -d "$get_dir" ;
+  if test -d "${get_dir}" ;
   then 
     # Get DIR
     get_dir="${@}"

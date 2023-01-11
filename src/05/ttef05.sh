@@ -8,7 +8,7 @@ declare -i i=0
 count=10;
 
 # Get a list of all executable files in the current directory and its subdirectories
-files=$(find "${get_dir}" -type f -executable -printf "%h/%f %s\n" | sort -hr -k2 | cut -d' ' -f1 | head -n $count);
+files=$(find "${@}" -type f -executable -printf "%h/%f %s\n" | sort -hr -k2 | cut -d' ' -f1 | head -n $count);
 
 # Calculate the size and hash of each executable file
 for file in ${files};
