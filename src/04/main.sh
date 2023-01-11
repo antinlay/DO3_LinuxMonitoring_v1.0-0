@@ -1,7 +1,6 @@
 #!/bin/bash
 
-dir_pr=$(pwd)
-dir_0="/04"
+declare dir_pr=$(pwd) dir_0="/04";
 
 if [[ $dir_pr == *"$dir_0" ]] ;
 then
@@ -37,6 +36,6 @@ then
     . echo04.sh
 
 else
-    echo "Error: Please run script from *src$dir_0/ directory!"
+    echo "Error: Please run script from $dir_0/ directory!"
     exit 1
 fi

@@ -1,12 +1,10 @@
 #!/bin/bash
 
 # Set color codes for column 1 background and font
-col1_bg_code=""
-col1_font_code=""
+declare col1_bg_code col1_font_code
 
 # Set color codes for column 2 background and font
-col2_bg_code=""
-col2_font_code=""
+declare col2_bg_code col2_font_code
 
 # Set color codes for column 1
 case "$col1_bg" in

@@ -15,6 +15,6 @@ then
             ;;
     esac
 else
-    echo "Error: Please run script from $dir_0/ directory!"
+    echo "Error: please run script from $dir_0/ directory!"
     exit 1
 fi
