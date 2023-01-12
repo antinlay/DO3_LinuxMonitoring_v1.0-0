@@ -8,7 +8,7 @@ TIMEZONE=$(timedatectl| grep "Time" | awk '{print $3, $4, $5}' | sed -E 's/^(.*)
 # DATE = current time as: 12 May 2020 12:24:36
 DATE=$(date "+%d %B %Y %T");
 # UPTIME = system uptime
-UPTIME=$(uptime | sed 's/[0-9]* users.*//'| awk -F, '{ print $1$2 }');
+UPTIME=$(uptime | sed -E 's/^ [0-9][0-9]:[0-9][0-9]:[0-9][0-9] up  (.*),.*[0-9] user.*/\1/');
 # UPTIME_SEC = system uptime in seconds
 UPTIME_SEC=$(awk '{ printf ("%.f", $1) }' /proc/uptime);
 INF=$(ip route list | awk '/^default/ {print $5}');
@@ -31,5 +31,3 @@ SPACE_ROOT=$(df -k / | grep "dev" | awk '{printf("%0.2f", ($3 + $4) / 1024)}');
 SPACE_ROOT_USED=$(df -k / | grep "dev" | awk '{printf("%0.2f", $3 / 1024)}');
 # SPACE_ROOT_FREE = size of free space of the root partition in MB, with an accuracy of two decimal places
 SPACE_ROOT_FREE=$(df -k / | grep "dev" | awk '{printf("%0.2f", $4 / 1024)}');
-# FILENAME in format DD_MM_YY_HH_MM_SS.status
-FILENAME=$(date "+%d_%m_%Y_%H_%M_%S.status");
