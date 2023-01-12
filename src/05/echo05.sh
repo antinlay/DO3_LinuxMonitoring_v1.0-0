@@ -27,4 +27,4 @@ then
     echo "TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file):"
     . ttef05.sh;
 fi
-. time.sh $start_time;
+. time.sh;
