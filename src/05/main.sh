@@ -13,7 +13,7 @@ then
     get_dir="${@}"
   else
     echo "Warning: path doesn't exist. Set default path!"
-    get_dir="$HOME"
+    get_dir="./"
   fi
     . var05.sh
     . echo05.sh
