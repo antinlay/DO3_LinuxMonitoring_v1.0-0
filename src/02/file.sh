@@ -6,10 +6,9 @@ declare temp=".temp";
 echo "Create file with sysinfo? (y - yes, other - no)";
 read -s item;
 case "$item" in
-    y|Y) FILENAME=$(date "+%d_%m_%Y_%H_%M_%S.status")
-        echo "Report ${FILENAME} was created!"
-        $(mv ${temp} ${FILENAME}) ;;
-    *) echo "File didn't created"
-        rm "${temp}";
+    y|Y) mv ${temp} $(date "+%d_%m_%Y_%H_%M_%S.status")
+        echo "Report was created!" ;;
+    *) rm "${temp}";
+        echo "File didn't created"
         exit 0 ;;
 esac
