@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Initialize an array to store the sizes and hashes of the executable files
 declare -A sizes units set_nums path_arr;

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 declare dir_pr=$(pwd) dir_0="/05" start_time=$(date +%s.%N);
 
